@@ -18,6 +18,7 @@ public:
 	void startController();
 private:
 	void launchMainMenu();
+	void launchInventoryMenu();
 
 };
 

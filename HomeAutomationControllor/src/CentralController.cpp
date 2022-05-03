@@ -52,10 +52,9 @@ void CentralController::launchMainMenu()
 				std::cin.get();
 				break;
 			case INVENTORY:
-				std::cout << "Option 2. Inventory was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchInventoryMenu();
 				break;
 			case SCHEDULER:
 				std::cout << "Option 3. Scheduler was selected.";
@@ -84,6 +83,78 @@ void CentralController::launchMainMenu()
 			}
 		}
 		
+	}
+}
+
+void CentralController::launchInventoryMenu()
+{
+	enum choices { ADD_DEVICE = 1, EDIT_DEVICE, DELETE_DEVICE, REFRESH_INVENTORY_LISTING, BACK_TO_MAIN_MENU };
+	int choice = 0;
+	while (choice != BACK_TO_MAIN_MENU) {
+		system("cls");  // Clear the Console Screen
+
+		std::string inventoryMenu;   // Central Controller Inventory Menu String Builder
+		inventoryMenu.append("=============================================================\n");
+		inventoryMenu.append("         Central Smart-Home Controller Inventory Menu        \n");
+		inventoryMenu.append("------------------------------------------------------------\n");
+		inventoryMenu.append("  1. Add Device                                             \n");
+		inventoryMenu.append("  2. Edit Device                                            \n");
+		inventoryMenu.append("  3. Delete Device                                          \n");
+		inventoryMenu.append("  4. Refresh Inventory Listing                              \n");
+		inventoryMenu.append("  5. Back to Main Menu                                      \n");
+		inventoryMenu.append("=============================================================\n");
+		inventoryMenu.append(">>>");              // Input Prompt
+		std::cout << inventoryMenu;
+
+		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+			choice = 0;
+		}
+		else if (choice < 1 || choice > 5) {   // Clear if CIN is not in range [1,5]
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else                                   // Branch to Submenu
+		{
+			switch (choice) {
+			case ADD_DEVICE:
+				std::cout << "Option 1. Add Device was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case EDIT_DEVICE:
+				std::cout << "Option 2. Edit Device was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case DELETE_DEVICE:
+				std::cout << "Option 3. Delete Device was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case REFRESH_INVENTORY_LISTING:
+				std::cout << "Option 4. Refresh Inventory Listing was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case BACK_TO_MAIN_MENU:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				break;
+			default:
+				std::cout << "Default Option is Not Possible.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			}
+		}
+
 	}
 }
 
