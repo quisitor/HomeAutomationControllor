@@ -25,9 +25,13 @@ int main() {
 	
 	// Run Tests
 	testMACAddressValidation();
+	std::cin.get();
 	testIPV4AddressValidation();
+	std::cin.get();
 	testIPV4SubnetMaskValidation();
+	std::cin.get();
 	testDeviceNameValidation();
+	std::cin.get();
 	testMainMenuDisplay();
 
 	return 0;
