@@ -19,6 +19,8 @@ public:
 private:
 	void launchMainMenu();
 	void launchInventoryMenu();
+	void launchSchedulerMenu();
+	void launchControllerMenu();
 
 };
 
