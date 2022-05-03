@@ -7,18 +7,22 @@
  *********************************************************************/
 #include "ValidationLibrary.h"
 #include "CentralController.h"
+#include "Network.h"
+#include "SmartNode.h"
 #include <string>
 #include <iostream>
 
 using namespace std;
 using namespace ValidationLibrary;
 using namespace Controller;
+using namespace Node;
 
 void testMACAddressValidation();
 void testIPV4AddressValidation();
 void testIPV4SubnetMaskValidation();
 void testDeviceNameValidation();
 void testMainMenuDisplay();
+void testNetworkObject();
 
 
 int main() {
@@ -32,7 +36,10 @@ int main() {
 	std::cin.get();
 	testDeviceNameValidation();
 	std::cin.get();
+	testNetworkObject();
+	std::cin.get();
 	testMainMenuDisplay();
+
 
 	return 0;
 
@@ -257,5 +264,30 @@ int main() {
 	void testMainMenuDisplay() {
 		CentralController testController;
 		testController.startController();
+	}
+
+	/**
+	 * The network object is meant to be called via the derived SmartNode Device.
+	 * The input validation will be performed upfront in the central controller
+	 */
+	void testNetworkObject() {
+		class Thermostat : public SmartNode {
+		public:
+			Thermostat(string deviceName, string deviceMac, string deviceIPv4, string deviceSubnetMask, string deviceGatewayAddress)
+				: SmartNode(deviceName, deviceMac, deviceIPv4, deviceSubnetMask, deviceGatewayAddress) {}
+		 };
+
+			Thermostat thermostat{ "SmartThermo_1", "AA:BB:CC:DD:EE:FF", "192.168.1.100", "255.255.255.0", "192.168.1.1" };
+
+			std::cout << std::endl << std::endl << std::endl << std::endl;
+			std::cout << "SmartNode Derived Device Network Object Validation Unit Tests\n===================================================\n\n";
+			std::cout << "These are the device creation and state pull cases\n-----------------------" << endl;
+			std::cout << "Created a Thermostat with the following values:\n";
+			std::cout << "Device Name: " << thermostat.getNetworkConfiguration()->getDeviceName() << endl;
+			std::cout << "Device MAC: " << thermostat.getNetworkConfiguration()->getMacAddress() << endl;
+			std::cout << "Device IPv4 Address: " << thermostat.getNetworkConfiguration()->getIPAddress() << endl;
+			std::cout << "Device Subnet Address: " << thermostat.getNetworkConfiguration()->getSubnetMask() << endl;
+			std::cout << "Device Gateway Address: " << thermostat.getNetworkConfiguration()->getGatewayAddress() << endl;
+				
 	}
 

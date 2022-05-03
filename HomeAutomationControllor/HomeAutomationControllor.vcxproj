@@ -150,11 +150,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\SmartNode.h" />
     <ClInclude Include="src\Network.h" />
     <ClInclude Include="src\CentralController.h" />
     <ClInclude Include="src\ValidationLibrary.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\SmartNode.cpp" />
     <ClCompile Include="src\Network.cpp" />
     <ClCompile Include="src\CentralController.cpp" />
     <ClCompile Include="src\HomeAutomationMain.cpp" />
