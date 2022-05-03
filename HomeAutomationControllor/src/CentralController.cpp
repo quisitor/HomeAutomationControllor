@@ -169,10 +169,9 @@ void CentralController::launchInventoryMenu()
 		{
 			switch (choice) {
 			case ADD_DEVICE:
-				std::cout << "Option 1. Add Device was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchInventoryAddDeviceMenu();
 				break;
 			case EDIT_DEVICE:
 				std::cout << "Option 2. Edit Device was selected.";
@@ -404,6 +403,81 @@ void CentralController::launchPowerOffMenu(int &mainMenuChoice)
 
 void CentralController::launchInventoryAddDeviceMenu()
 {
+	enum choices { THERMOSTAT = 1, TELEVISION, VACUUM_BOT, ALARM, LIGHTING_ZONE, BACK_TO_INVENTORY_MENU };
+	int choice = 0;
+	while (choice != BACK_TO_INVENTORY_MENU) {
+		system("cls");  // Clear the Console Screen
+
+		std::string inventoryAddMenu;   // Central Controller Inventory-Add Menu String Builder
+		inventoryAddMenu.append("=============================================================\n");
+		inventoryAddMenu.append("                Inventory -  Add Device Menu                 \n");
+		inventoryAddMenu.append("-------------------------------------------------------------\n");
+		inventoryAddMenu.append("  1. Thermostat                                              \n");
+		inventoryAddMenu.append("  2. Television                                              \n");
+		inventoryAddMenu.append("  3. Vacuum Bot                                              \n");
+		inventoryAddMenu.append("  4. Alarm                                                   \n");
+		inventoryAddMenu.append("  5. Lighting Zone                                           \n");
+		inventoryAddMenu.append("  6. Back to Inventory Menu                                  \n");
+		inventoryAddMenu.append("=============================================================\n");
+		inventoryAddMenu.append(">>> ");              // Input Prompt
+		std::cout << inventoryAddMenu;
+
+		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+			choice = 0;
+		}
+		else if (choice < 1 || choice > 6) {   // Clear if CIN is not in range [1,6]
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else                                   // Branch to Submenu
+		{
+			switch (choice) {
+			case THERMOSTAT:
+				std::cout << "Option 1. Thermostat was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case TELEVISION:
+				std::cout << "Option 2. Television was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case VACUUM_BOT:
+				std::cout << "Option 3. Vacuum Bot was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case ALARM:
+				std::cout << "Option 4. Alarm was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case LIGHTING_ZONE:
+				std::cout << "Option 5. Ligting Zone was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case BACK_TO_INVENTORY_MENU:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				break;
+			default:
+				std::cout << "Default Option is Not Possible.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			}
+		}
+
+	}
 }
 
 } // End namespace Controller
