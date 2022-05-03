@@ -8,6 +8,9 @@ namespace Controller {
 	{
 
 	}
+	CentralController::~CentralController()
+	{
+	}
 	void CentralController::startController()
 {
 	launchMainMenu();
@@ -22,13 +25,13 @@ void CentralController::launchMainMenu()
 		
 		std::string scMainMenu;   // Central Controller Main Menu String Builder
 		scMainMenu.append("=============================================================\n");
-		scMainMenu.append("           Central Smart-Home Controller Main Menu          \n");
-		scMainMenu.append("------------------------------------------------------------\n");
-		scMainMenu.append("  1. Status                                                 \n");
-		scMainMenu.append("  2. Inventory                                              \n");
-		scMainMenu.append("  3. Scheduler                                              \n");
-		scMainMenu.append("  4. Controller                                             \n");
-		scMainMenu.append("  5. Power Off                                              \n");
+		scMainMenu.append("           Central Smart-Home Controller Main Menu           \n");
+		scMainMenu.append("-------------------------------------------------------------\n");
+		scMainMenu.append("  1. Status                                                  \n");
+		scMainMenu.append("  2. Inventory                                               \n");
+		scMainMenu.append("  3. Scheduler                                               \n");
+		scMainMenu.append("  4. Controller                                              \n");
+		scMainMenu.append("  5. Power Off                                               \n");
 		scMainMenu.append("=============================================================\n");
 		scMainMenu.append(">>> ");              // Input Prompt
 		std::cout << scMainMenu;
@@ -46,10 +49,9 @@ void CentralController::launchMainMenu()
 		{
 			switch (choice) {
 			case STATUS:
-				std::cout << "Option 1. Status was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchStatusMenu();
 				break;
 			case INVENTORY:
 				std::cin.clear();
@@ -67,10 +69,9 @@ void CentralController::launchMainMenu()
 				launchControllerMenu();
 				break;
 			case POWEROFF:
-				std::cout << "Option 5. Power Off was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchPowerOffMenu(choice);
 				break;
 			default:
 				std::cout << "Default Option is Not Possible.";
@@ -84,6 +85,57 @@ void CentralController::launchMainMenu()
 	}
 }
 
+void CentralController::launchStatusMenu()
+{
+	enum choices { REFRESH_STATUS = 1, BACK_TO_MAIN_MENU };
+	int choice = 0;
+	while (choice != BACK_TO_MAIN_MENU) {
+		system("cls");  // Clear the Console Screen
+
+		std::string statusMenu;   // Central Controller Status Menu String Builder
+		statusMenu.append("=============================================================\n");
+		statusMenu.append("               Central Smart-Home Status Menu                \n");
+		statusMenu.append("-------------------------------------------------------------\n");
+		statusMenu.append("  1. Refresh Status                                          \n");
+		statusMenu.append("  2. Back to Main Menu                                       \n");
+		statusMenu.append("=============================================================\n");
+		statusMenu.append(">>> ");              // Input Prompt
+		std::cout << statusMenu;
+
+		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+			choice = 0;
+		}
+		else if (choice < 1 || choice > 2) {   // Clear if CIN is not in range [1,2]
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else                                   // Branch to Submenu
+		{
+			switch (choice) {
+			case REFRESH_STATUS:
+				std::cout << "Option 1. Refresh Status was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case BACK_TO_MAIN_MENU:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				break;
+			default:
+				std::cout << "Default Option is Not Possible.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			}
+		}
+
+	}
+}
+
 void CentralController::launchInventoryMenu()
 {
 	enum choices { ADD_DEVICE = 1, EDIT_DEVICE, DELETE_DEVICE, REFRESH_INVENTORY_LISTING, BACK_TO_MAIN_MENU };
@@ -94,12 +146,12 @@ void CentralController::launchInventoryMenu()
 		std::string inventoryMenu;   // Central Controller Inventory Menu String Builder
 		inventoryMenu.append("=============================================================\n");
 		inventoryMenu.append("         Central Smart-Home Controller Inventory Menu        \n");
-		inventoryMenu.append("------------------------------------------------------------\n");
-		inventoryMenu.append("  1. Add Device                                             \n");
-		inventoryMenu.append("  2. Edit Device                                            \n");
-		inventoryMenu.append("  3. Delete Device                                          \n");
-		inventoryMenu.append("  4. Refresh Inventory Listing                              \n");
-		inventoryMenu.append("  5. Back to Main Menu                                      \n");
+		inventoryMenu.append("-------------------------------------------------------------\n");
+		inventoryMenu.append("  1. Add Device                                              \n");
+		inventoryMenu.append("  2. Edit Device                                             \n");
+		inventoryMenu.append("  3. Delete Device                                           \n");
+		inventoryMenu.append("  4. Refresh Inventory Listing                               \n");
+		inventoryMenu.append("  5. Back to Main Menu                                       \n");
 		inventoryMenu.append("=============================================================\n");
 		inventoryMenu.append(">>> ");              // Input Prompt
 		std::cout << inventoryMenu;
@@ -166,13 +218,13 @@ void CentralController::launchSchedulerMenu()
 		std::string schedulerMenu;   // Central Controller Scheduler Menu String Builder
 		schedulerMenu.append("=============================================================\n");
 		schedulerMenu.append("         Central Smart-Home Controller Scheduler Menu        \n");
-		schedulerMenu.append("------------------------------------------------------------\n");
-		schedulerMenu.append("  1. Create Schedule                                        \n");
-		schedulerMenu.append("  2. Edit Schedule                                          \n");
-		schedulerMenu.append("  3. Delete Schedule                                        \n");
-		schedulerMenu.append("  4. Activate Schedule                                      \n");
-		schedulerMenu.append("  5. Pause Schedule                                         \n");
-		schedulerMenu.append("  6. Back to Main Menu                                      \n");
+		schedulerMenu.append("-------------------------------------------------------------\n");
+		schedulerMenu.append("  1. Create Schedule                                         \n");
+		schedulerMenu.append("  2. Edit Schedule                                           \n");
+		schedulerMenu.append("  3. Delete Schedule                                         \n");
+		schedulerMenu.append("  4. Activate Schedule                                       \n");
+		schedulerMenu.append("  5. Pause Schedule                                          \n");
+		schedulerMenu.append("  6. Back to Main Menu                                       \n");
 		schedulerMenu.append("=============================================================\n");
 		schedulerMenu.append(">>> ");              // Input Prompt
 		std::cout << schedulerMenu;
@@ -245,11 +297,11 @@ void CentralController::launchControllerMenu()
 		std::string controllerMenu;   // Central Controller Controller Menu String Builder
 		controllerMenu.append("=============================================================\n");
 		controllerMenu.append("        Central Smart-Home Controller Controller Menu        \n");
-		controllerMenu.append("------------------------------------------------------------\n");
-		controllerMenu.append("  1. Modify Device Setting                                  \n");
-		controllerMenu.append("  2. Enable Device                                          \n");
-		controllerMenu.append("  3. Disable Device                                         \n");
-		controllerMenu.append("  4. Back to Main Menu                                      \n");
+		controllerMenu.append("-------------------------------------------------------------\n");
+		controllerMenu.append("  1. Modify Device Setting                                   \n");
+		controllerMenu.append("  2. Enable Device                                           \n");
+		controllerMenu.append("  3. Disable Device                                          \n");
+		controllerMenu.append("  4. Back to Main Menu                                       \n");
 		controllerMenu.append("=============================================================\n");
 		controllerMenu.append(">>> ");              // Input Prompt
 		std::cout << controllerMenu;
@@ -298,6 +350,60 @@ void CentralController::launchControllerMenu()
 		}
 
 	}
+}
+
+void CentralController::launchPowerOffMenu(int &mainMenuChoice)
+{
+	enum choices { CONFIRM_CONTROLLER_SHUTDOWN = 1, BACK_TO_MAIN_MENU };
+	int choice = 0;
+	while (choice != BACK_TO_MAIN_MENU && choice != CONFIRM_CONTROLLER_SHUTDOWN) {
+		system("cls");  // Clear the Console Screen
+
+		std::string powerOffMenu;   // Central Controller Power Off Menu String Builder
+		powerOffMenu.append("=============================================================\n");
+		powerOffMenu.append("               Central Smart-Home Status Menu                \n");
+		powerOffMenu.append("-------------------------------------------------------------\n");
+		powerOffMenu.append("  1. Confirm Controller Shutdown                             \n");
+		powerOffMenu.append("  2. Back to Main Menu                                       \n");
+		powerOffMenu.append("=============================================================\n");
+		powerOffMenu.append(">>> ");              // Input Prompt
+		std::cout << powerOffMenu;
+
+		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+			choice = 0;
+		}
+		else if (choice < 1 || choice > 2) {   // Clear if CIN is not in range [1,2]
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else                                   // Branch to Submenu
+		{
+			switch (choice) {
+			case CONFIRM_CONTROLLER_SHUTDOWN:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				break;
+			case BACK_TO_MAIN_MENU:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				mainMenuChoice = 0;
+				break;
+			default:
+				std::cout << "Default Option is Not Possible.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			}
+		}
+
+	}
+}
+
+void CentralController::launchInventoryAddDeviceMenu()
+{
 }
 
 } // End namespace Controller

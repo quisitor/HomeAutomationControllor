@@ -15,12 +15,18 @@ class CentralController
 {
 public:
 	CentralController();
+	~CentralController();
 	void startController();
 private:
+	// Top-Level Menus
 	void launchMainMenu();
+	void launchStatusMenu();
 	void launchInventoryMenu();
 	void launchSchedulerMenu();
 	void launchControllerMenu();
+	void launchPowerOffMenu(int &mainMenuChoice);
+	// Sub-Level Menus
+	void launchInventoryAddDeviceMenu();
 
 };
 
