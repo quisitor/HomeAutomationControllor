@@ -1,4 +1,5 @@
 ﻿#include "CentralController.h"
+#include "ValidationLibrary.h"
 #include <string>
 #include <iostream>
 
@@ -401,6 +402,165 @@ void CentralController::launchPowerOffMenu(int &mainMenuChoice)
 	}
 }
 
+void CentralController::launchGetNetworkConfigDataMenu()
+{
+	enum choices { DEVICE_NAME = 1, DEVICE_MAC, DEVICE_IPV4_ADDRESS, DEVICE_SUBNET_MASK, DEVICE_GATEWAY_ADDRESS, SAVE, CANCEL };
+	int choice = 0;
+	while (choice != CANCEL) {
+		system("cls");  // Clear the Console Screen
+
+		std::string getNetworkConfigMenu;   // Central Controller Inventory-Add Menu String Builder
+		getNetworkConfigMenu.append("=============================================================\n");
+		getNetworkConfigMenu.append("                Inventory -  Add Device Menu                 \n");
+		getNetworkConfigMenu.append("-------------------------------------------------------------\n");
+		getNetworkConfigMenu.append("  1. Device Name (Max 15 Characters & Numbers)               \n");
+		getNetworkConfigMenu.append("  2. Device MAC  (AA:BB:CC:DD:EE:FF)                         \n");
+		getNetworkConfigMenu.append("  3. Device IPv4 Address (xxx.xxx.xxx.xxx)                   \n");
+		getNetworkConfigMenu.append("  4. Device Subnet Mask  (xxx.xxx.xxx.xxx)                   \n");
+		getNetworkConfigMenu.append("  5. Device Gateway Address (xxx.xxx.xxx.xxx)                \n");
+		getNetworkConfigMenu.append("  6. Save Device                                             \n");
+		getNetworkConfigMenu.append("  7. Cancel and Discard Input                                \n");
+		getNetworkConfigMenu.append("=============================================================\n");
+		getNetworkConfigMenu.append(">>> ");              // Input Prompt
+		std::cout << getNetworkConfigMenu;
+
+		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+			choice = 0;
+		}
+		else if (choice < 1 || choice > 7) {   // Clear if CIN is not in range [1,7]
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else                                   // Branch to Submenu
+		{
+			switch (choice) {
+			case DEVICE_NAME:
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				launchCreateDeviceNameMenu();
+				break;
+			case DEVICE_MAC:
+				std::cout << "Option 2. Device MAC was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case DEVICE_IPV4_ADDRESS:
+				std::cout << "Option 3. Device IPv4 Address was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case DEVICE_SUBNET_MASK:
+				std::cout << "Option 4. Device Subnet Maks selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case DEVICE_GATEWAY_ADDRESS:
+				std::cout << "Option 5. Device Gateway Address was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case SAVE:
+				std::cout << "Option 6. Save was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			case CANCEL:
+				std::cout << "Option 7. Cancel was selected.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			default:
+				std::cout << "Default Option is Not Possible.";
+				std::cin.clear();
+				std::cin.ignore(255, '\n');
+				std::cin.get();
+				break;
+			}
+		}
+
+	}
+}
+
+void CentralController::launchCreateDeviceNameMenu()
+{
+	std::string choice = "";
+	bool isDeviceNameValid = false;
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::string createDeviceNameMenu;   // Central Controller Create Device Name Menu String Builder
+		createDeviceNameMenu.append("=============================================================\n");
+		createDeviceNameMenu.append("         Central Smart-Home Create Device Name Menu          \n");
+		createDeviceNameMenu.append("-------------------------------------------------------------\n");
+		createDeviceNameMenu.append("  Device Name Constraints:                                   \n");
+		createDeviceNameMenu.append("     -- Total Lenght = 15 Characters                         \n");
+		createDeviceNameMenu.append("     -- Can contain Upper and Lowercase Letters              \n");
+		createDeviceNameMenu.append("     -- Can contain Numbers                                  \n");
+		createDeviceNameMenu.append("     -- Cannot be Q or q                                     \n");
+		createDeviceNameMenu.append("  Examples                                                   \n");
+		createDeviceNameMenu.append("     -- THERMOSMART01                                        \n");
+		createDeviceNameMenu.append("     -- ThermoSmart                                          \n");
+		createDeviceNameMenu.append("  Enter Value at the prompt >>>                              \n");
+		createDeviceNameMenu.append("=============================================================\n");
+		createDeviceNameMenu.append("(Q to Quit Input and Not Save) >>> ");              // Input Prompt
+		std::cout << createDeviceNameMenu;
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 15) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice.length() == 1 && (choice.compare("Q") or choice.compare("q"))) {
+			// Do nothing and allow to exit the loop back to the previous menu
+		}
+		else if (ValidationLibrary::Network::isDeviceNameValid(choice)) {
+			
+			_tempNewSmartNodeContainer["device_name"] = choice;    // Store user input value into map while obtaining rest of input
+			_isTempNewSmartNodeContainerDeviceNameSet = true;      // Set device_name flag = true for save device option enablement
+			choice = "Q";                                          // Return to previous menu afte setting the device name successfully
+
+		}
+
+
+	}
+}
+
+void CentralController::launchCreateDeviceMACMenu()
+{
+}
+
+void CentralController::launchCreateDeviceIPAddressMenu()
+{
+}
+
+void CentralController::launchCreateSubnetMaskMenu()
+{
+}
+
+void CentralController::launchCreateGatewayAddressMenu()
+{
+}
+
+void CentralController::resetTempNewSmartNodeContainerStateFlags()
+{
+	_isTempNewSmartNodeContainerDeviceNameSet = false;
+	_isTempNewSmartNodeContainerDeviceMAC = false;
+	_isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;
+	_isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
+	_isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
+}
+
 void CentralController::launchInventoryAddDeviceMenu()
 {
 	enum choices { THERMOSTAT = 1, TELEVISION, VACUUM_BOT, ALARM, LIGHTING_ZONE, BACK_TO_INVENTORY_MENU };
@@ -435,10 +595,9 @@ void CentralController::launchInventoryAddDeviceMenu()
 		{
 			switch (choice) {
 			case THERMOSTAT:
-				std::cout << "Option 1. Thermostat was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchGetNetworkConfigDataMenu();
 				break;
 			case TELEVISION:
 				std::cout << "Option 2. Television was selected.";
@@ -459,7 +618,7 @@ void CentralController::launchInventoryAddDeviceMenu()
 				std::cin.get();
 				break;
 			case LIGHTING_ZONE:
-				std::cout << "Option 5. Ligting Zone was selected.";
+				std::cout << "Option 5. Lighting Zone was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
 				std::cin.get();
@@ -478,6 +637,25 @@ void CentralController::launchInventoryAddDeviceMenu()
 		}
 
 	}
+}
+
+/**
+ * Friend function to help test user data collection.
+ * 
+ * \param centralController
+ */
+void print_tempNewSmartNodeContainer(CentralController centralController)
+{
+	std::string smartNode;
+	std::cout << std::endl << std::endl;
+	smartNode.append("=====================================\n");
+	smartNode.append("            smartNodeData            \n");
+	smartNode.append("-------------------------------------\n");
+	std::cout << smartNode;
+	for (auto kvPair : centralController._tempNewSmartNodeContainer) {
+		std::cout << kvPair.first << " : " << kvPair.second << std::endl;
+	}
+	std::cout << "=====================================" << std::endl;
 }
 
 } // End namespace Controller

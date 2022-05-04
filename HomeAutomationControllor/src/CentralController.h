@@ -8,6 +8,9 @@
  *********************************************************************/
 #pragma once
 #include<stdlib.h>
+#include"SmartNode.h"
+#include<map>
+#include<vector>
 
 namespace Controller {
 
@@ -17,6 +20,8 @@ public:
 	CentralController();
 	~CentralController();
 	void startController();
+	friend void print_tempNewSmartNodeContainer(CentralController centralController);
+
 private:
 	// Top-Level Menus
 	void launchMainMenu();
@@ -25,8 +30,31 @@ private:
 	void launchSchedulerMenu();
 	void launchControllerMenu();
 	void launchPowerOffMenu(int &mainMenuChoice);
+
 	// Sub-Level Menus
 	void launchInventoryAddDeviceMenu();
+	void launchGetNetworkConfigDataMenu();
+	void launchCreateDeviceNameMenu();
+	void launchCreateDeviceMACMenu();
+	void launchCreateDeviceIPAddressMenu();
+	void launchCreateSubnetMaskMenu();
+	void launchCreateGatewayAddressMenu();
+
+	// Containers
+	std::vector<Node::SmartNode*> _smartNodeInventory;
+	std::map<std::string, std::string> _tempNewSmartNodeContainer;
+
+	// State Flags
+	bool _isTempNewSmartNodeContainerDeviceNameSet = false;
+	bool _isTempNewSmartNodeContainerDeviceMAC = false;
+	bool _isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;
+	bool _isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
+	bool _isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
+
+	// Internal Helper Functions
+	void resetTempNewSmartNodeContainerStateFlags();
+
+
 
 };
 

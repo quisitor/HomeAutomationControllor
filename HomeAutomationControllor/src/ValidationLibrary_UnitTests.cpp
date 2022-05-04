@@ -23,6 +23,7 @@ void testIPV4SubnetMaskValidation();
 void testDeviceNameValidation();
 void testMainMenuDisplay();
 void testNetworkObject();
+void test_tempNewSmartNodeContainerDataCollection();
 
 
 int main() {
@@ -39,6 +40,9 @@ int main() {
 	testNetworkObject();
 	std::cin.get();
 	testMainMenuDisplay();
+	std::cin.get();
+	test_tempNewSmartNodeContainerDataCollection();
+	std::cin.get();
 
 
 	return 0;
@@ -291,3 +295,8 @@ int main() {
 				
 	}
 
+	void test_tempNewSmartNodeContainerDataCollection() {
+		CentralController testController;
+		testController.startController();
+		print_tempNewSmartNodeContainer(testController);
+	}
