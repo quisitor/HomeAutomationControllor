@@ -29,20 +29,20 @@ void test_tempNewSmartNodeContainerDataCollection();
 int main() {
 	
 	// Run Tests
-	testMACAddressValidation();
-	std::cin.get();
-	testIPV4AddressValidation();
-	std::cin.get();
-	testIPV4SubnetMaskValidation();
-	std::cin.get();
-	testDeviceNameValidation();
-	std::cin.get();
-	testNetworkObject();
-	std::cin.get();
-	testMainMenuDisplay();
-	std::cin.get();
+	//testMACAddressValidation();
+	//std::cin.get();
+	//testIPV4AddressValidation();
+	//std::cin.get();
+	//testIPV4SubnetMaskValidation();
+	//std::cin.get();
+	//testDeviceNameValidation();
+	//std::cin.get();
+	//testNetworkObject();
+	//std::cin.get();
+	//testMainMenuDisplay();
+	//std::cin.get();
 	test_tempNewSmartNodeContainerDataCollection();
-	std::cin.get();
+	//std::cin.get();
 
 
 	return 0;

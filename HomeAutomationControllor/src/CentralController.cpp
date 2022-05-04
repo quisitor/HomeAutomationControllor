@@ -442,16 +442,14 @@ void CentralController::launchGetNetworkConfigDataMenu()
 				launchCreateDeviceNameMenu();
 				break;
 			case DEVICE_MAC:
-				std::cout << "Option 2. Device MAC was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchCreateDeviceMACMenu();
 				break;
 			case DEVICE_IPV4_ADDRESS:
-				std::cout << "Option 3. Device IPv4 Address was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchCreateDeviceIPAddressMenu();
 				break;
 			case DEVICE_SUBNET_MASK:
 				std::cout << "Option 4. Device Subnet Maks selected.";
@@ -538,10 +536,95 @@ void CentralController::launchCreateDeviceNameMenu()
 
 void CentralController::launchCreateDeviceMACMenu()
 {
+	std::string choice = "";
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::string createDeviceMACMenu;   // Central Controller Create Device MAC Menu String Builder
+		createDeviceMACMenu.append("=============================================================\n");
+		createDeviceMACMenu.append("         Central Smart-Home Create Device MAC Menu           \n");
+		createDeviceMACMenu.append("-------------------------------------------------------------\n");
+		createDeviceMACMenu.append("  Device MAC Constraints:                                    \n");
+		createDeviceMACMenu.append("     -- Total Lenght = 17 Characters                         \n");
+		createDeviceMACMenu.append("     -- Can contain Upper and Lowercase Letters A thru F     \n");
+		createDeviceMACMenu.append("     -- Can contain Numbers 0 thru 9                         \n");
+		createDeviceMACMenu.append("     -- Must use octet colon delimeters as shown in examples \n");
+		createDeviceMACMenu.append("     -- Cannot be Q or q                                     \n");
+		createDeviceMACMenu.append("  Examples                                                   \n");
+		createDeviceMACMenu.append("     -- AA:BB:CC:DD:EE:FF                                    \n");
+		createDeviceMACMenu.append("     -- aa:b1:c2:d3:ff:f1                                    \n");
+		createDeviceMACMenu.append("  Enter Value at the prompt >>>                              \n");
+		createDeviceMACMenu.append("=============================================================\n");
+		createDeviceMACMenu.append("(Q to Quit Input and Not Save) >>> ");              // Input Prompt
+		std::cout << createDeviceMACMenu;
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 17) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice.length() == 1 && (choice.compare("Q") or choice.compare("q"))) {
+			// Do nothing and allow to exit the loop back to the previous menu
+		}
+		else if (ValidationLibrary::Network::isMACValid(choice)) {
+
+			_tempNewSmartNodeContainer["device_mac"] = choice;    // Store user input value into map while obtaining rest of input
+			_isTempNewSmartNodeContainerDeviceMACSet = true;      // Set device_name flag = true for save device option enablement
+			choice = "Q";                                          // Return to previous menu afte setting the device name successfully
+
+		}
+
+
+	}
 }
 
 void CentralController::launchCreateDeviceIPAddressMenu()
 {
+	std::string choice = "";
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::string createDeviceIPv4AddressMenu;   // Central Controller Create Device IPv4MAC Menu String Builder
+		createDeviceIPv4AddressMenu.append("=============================================================\n");
+		createDeviceIPv4AddressMenu.append("     Central Smart-Home Create Device IPv4 Address Menu      \n");
+		createDeviceIPv4AddressMenu.append("-------------------------------------------------------------\n");
+		createDeviceIPv4AddressMenu.append("  Device IPv4 Address Constraints:                           \n");
+		createDeviceIPv4AddressMenu.append("     -- Total Lenght = 15 Characters                         \n");
+		createDeviceIPv4AddressMenu.append("     -- Can contain Numbers 0 thru 9                         \n");
+		createDeviceIPv4AddressMenu.append("     -- Must use dotted-decimal notation                     \n");
+		createDeviceIPv4AddressMenu.append("     -- Cannot be Q or q                                     \n");
+		createDeviceIPv4AddressMenu.append("  Examples                                                   \n");
+		createDeviceIPv4AddressMenu.append("     -- 192.168.234.123                                      \n");
+		createDeviceIPv4AddressMenu.append("     -- 10.10.10.1                                           \n");
+		createDeviceIPv4AddressMenu.append("  Enter Value at the prompt >>>                              \n");
+		createDeviceIPv4AddressMenu.append("=============================================================\n");
+		createDeviceIPv4AddressMenu.append("(Q to Quit Input and Not Save) >>> ");              // Input Prompt
+		std::cout << createDeviceIPv4AddressMenu;
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 15) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice.length() == 1 && (choice.compare("Q") or choice.compare("q"))) {
+			// Do nothing and allow to exit the loop back to the previous menu
+		}
+		else if (ValidationLibrary::Network::isIPv4AddressValid(choice)) {
+
+			_tempNewSmartNodeContainer["ipv4_address"] = choice;    // Store user input value into map while obtaining rest of input
+			_isTempNewSmartNodeContainerDeviceIPv4AddressSet = true;      // Set device_name flag = true for save device option enablement
+			choice = "Q";                                          // Return to previous menu afte setting the device name successfully
+
+		}
+
+
+	}
 }
 
 void CentralController::launchCreateSubnetMaskMenu()
@@ -555,7 +638,7 @@ void CentralController::launchCreateGatewayAddressMenu()
 void CentralController::resetTempNewSmartNodeContainerStateFlags()
 {
 	_isTempNewSmartNodeContainerDeviceNameSet = false;
-	_isTempNewSmartNodeContainerDeviceMAC = false;
+	_isTempNewSmartNodeContainerDeviceMACSet = false;
 	_isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;
 	_isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
 	_isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;

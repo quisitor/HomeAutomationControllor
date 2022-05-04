@@ -46,7 +46,7 @@ private:
 
 	// State Flags
 	bool _isTempNewSmartNodeContainerDeviceNameSet = false;
-	bool _isTempNewSmartNodeContainerDeviceMAC = false;
+	bool _isTempNewSmartNodeContainerDeviceMACSet = false;
 	bool _isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;
 	bool _isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
 	bool _isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
