@@ -452,16 +452,14 @@ void CentralController::launchGetNetworkConfigDataMenu()
 				launchCreateDeviceIPAddressMenu();
 				break;
 			case DEVICE_SUBNET_MASK:
-				std::cout << "Option 4. Device Subnet Maks selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchCreateSubnetMaskMenu();
 				break;
 			case DEVICE_GATEWAY_ADDRESS:
-				std::cout << "Option 5. Device Gateway Address was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchCreateGatewayAddressMenu();
 				break;
 			case SAVE:
 				std::cout << "Option 6. Save was selected.";
@@ -589,7 +587,7 @@ void CentralController::launchCreateDeviceIPAddressMenu()
 	while (choice != "Q" && choice != "q") {
 		system("cls");  // Clear the Console Screen
 
-		std::string createDeviceIPv4AddressMenu;   // Central Controller Create Device IPv4MAC Menu String Builder
+		std::string createDeviceIPv4AddressMenu;   // Central Controller Create Device IPv4 Menu String Builder
 		createDeviceIPv4AddressMenu.append("=============================================================\n");
 		createDeviceIPv4AddressMenu.append("     Central Smart-Home Create Device IPv4 Address Menu      \n");
 		createDeviceIPv4AddressMenu.append("-------------------------------------------------------------\n");
@@ -629,10 +627,94 @@ void CentralController::launchCreateDeviceIPAddressMenu()
 
 void CentralController::launchCreateSubnetMaskMenu()
 {
+	std::string choice = "";
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::string createDeviceSubnetAddressMenu;   // Central Controller Create Device Subnet Mask Menu String Builder
+		createDeviceSubnetAddressMenu.append("=============================================================\n");
+		createDeviceSubnetAddressMenu.append("    Central Smart-Home Create Device Subnet Address Menu     \n");
+		createDeviceSubnetAddressMenu.append("-------------------------------------------------------------\n");
+		createDeviceSubnetAddressMenu.append("  Device Subnet Address Constraints:                         \n");
+		createDeviceSubnetAddressMenu.append("     -- Total Lenght = 15 Characters                         \n");
+		createDeviceSubnetAddressMenu.append("     -- Can contain Numbers 0 thru 9                         \n");
+		createDeviceSubnetAddressMenu.append("     -- Must use dotted-decimal notation                     \n");
+		createDeviceSubnetAddressMenu.append("     -- Cannot be Q or q                                     \n");
+		createDeviceSubnetAddressMenu.append("  Examples                                                   \n");
+		createDeviceSubnetAddressMenu.append("     -- 255.255.255.255                                      \n");
+		createDeviceSubnetAddressMenu.append("     -- 255.255.255.0                                        \n");
+		createDeviceSubnetAddressMenu.append("  Enter Value at the prompt >>>                              \n");
+		createDeviceSubnetAddressMenu.append("=============================================================\n");
+		createDeviceSubnetAddressMenu.append("(Q to Quit Input and Not Save) >>> ");              // Input Prompt
+		std::cout << createDeviceSubnetAddressMenu;
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 15) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice.length() == 1 && (choice.compare("Q") or choice.compare("q"))) {
+			// Do nothing and allow to exit the loop back to the previous menu
+		}
+		else if (ValidationLibrary::Network::isSubnetMaskValid(choice)) {
+
+			_tempNewSmartNodeContainer["subnet_mask"] = choice;          // Store user input value into map while obtaining rest of input
+			_isTempNewSmartNodeContainerDeviceSubnetMaskSet = true;      // Set device_name flag = true for save device option enablement
+			choice = "Q";                                                // Return to previous menu afte setting the device name successfully
+
+		}
+
+
+	}
 }
 
 void CentralController::launchCreateGatewayAddressMenu()
 {
+	std::string choice = "";
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::string createDeviceGatewayAddressMenu;   // Central Controller Create Device Gateway Address Menu String Builder
+		createDeviceGatewayAddressMenu.append("=============================================================\n");
+		createDeviceGatewayAddressMenu.append("    Central Smart-Home Create Device Gateway Address Menu    \n");
+		createDeviceGatewayAddressMenu.append("-------------------------------------------------------------\n");
+		createDeviceGatewayAddressMenu.append("  Device Gateway Address Constraints:                        \n");
+		createDeviceGatewayAddressMenu.append("     -- Total Lenght = 15 Characters                         \n");
+		createDeviceGatewayAddressMenu.append("     -- Can contain Numbers 0 thru 9                         \n");
+		createDeviceGatewayAddressMenu.append("     -- Must use dotted-decimal notation                     \n");
+		createDeviceGatewayAddressMenu.append("     -- Cannot be Q or q                                     \n");
+		createDeviceGatewayAddressMenu.append("  Examples                                                   \n");
+		createDeviceGatewayAddressMenu.append("     -- 192.168.234.121                                      \n");
+		createDeviceGatewayAddressMenu.append("     -- 10.10.101.1                                          \n");
+		createDeviceGatewayAddressMenu.append("  Enter Value at the prompt >>>                              \n");
+		createDeviceGatewayAddressMenu.append("=============================================================\n");
+		createDeviceGatewayAddressMenu.append("(Q to Quit Input and Not Save) >>> ");              // Input Prompt
+		std::cout << createDeviceGatewayAddressMenu;
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 15) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice.length() == 1 && (choice.compare("Q") or choice.compare("q"))) {
+			// Do nothing and allow to exit the loop back to the previous menu
+		}
+		else if (ValidationLibrary::Network::isIPv4AddressValid(choice)) {
+
+			_tempNewSmartNodeContainer["gateway_address"] = choice;          // Store user input value into map while obtaining rest of input
+			_isTempNewSmartNodeContainerDeviceGatewayAddressSet = true;      // Set device_name flag = true for save device option enablement
+			choice = "Q";                                                    // Return to previous menu afte setting the device name successfully
+
+		}
+
+
+	}
 }
 
 void CentralController::resetTempNewSmartNodeContainerStateFlags()
