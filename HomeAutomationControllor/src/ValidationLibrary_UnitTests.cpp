@@ -277,26 +277,28 @@ int main() {
 	void testNetworkObject() {
 		class Thermostat : public SmartNode {
 		public:
-			Thermostat(string deviceName, string deviceMac, string deviceIPv4, string deviceSubnetMask, string deviceGatewayAddress)
-				: SmartNode(deviceName, deviceMac, deviceIPv4, deviceSubnetMask, deviceGatewayAddress) {}
+			Thermostat(string deviceType, string deviceName, string deviceMac, string deviceIPv4, string deviceSubnetMask, string deviceGatewayAddress)
+				: SmartNode(deviceType, deviceName, deviceMac, deviceIPv4, deviceSubnetMask, deviceGatewayAddress) {}
 		 };
 
-			Thermostat thermostat{ "SmartThermo_1", "AA:BB:CC:DD:EE:FF", "192.168.1.100", "255.255.255.0", "192.168.1.1" };
+			Thermostat thermostat{ "Thermostat", "SmartThermo_1", "AA:BB:CC:DD:EE:FF", "192.168.1.100", "255.255.255.0", "192.168.1.1" };
 
 			std::cout << std::endl << std::endl << std::endl << std::endl;
 			std::cout << "SmartNode Derived Device Network Object Validation Unit Tests\n===================================================\n\n";
 			std::cout << "These are the device creation and state pull cases\n-----------------------" << endl;
 			std::cout << "Created a Thermostat with the following values:\n";
-			std::cout << "Device Name: " << thermostat.getNetworkConfiguration()->getDeviceName() << endl;
-			std::cout << "Device MAC: " << thermostat.getNetworkConfiguration()->getMacAddress() << endl;
-			std::cout << "Device IPv4 Address: " << thermostat.getNetworkConfiguration()->getIPAddress() << endl;
-			std::cout << "Device Subnet Address: " << thermostat.getNetworkConfiguration()->getSubnetMask() << endl;
-			std::cout << "Device Gateway Address: " << thermostat.getNetworkConfiguration()->getGatewayAddress() << endl;
+			std::cout << "Device Type: " << thermostat.getDeviceType() << endl;
+			std::cout << "Device Name: " << thermostat.getNetworkConfigurationPtr()->getDeviceName() << endl;
+			std::cout << "Device MAC: " << thermostat.getNetworkConfigurationPtr()->getMacAddress() << endl;
+			std::cout << "Device IPv4 Address: " << thermostat.getNetworkConfigurationPtr()->getIPAddress() << endl;
+			std::cout << "Device Subnet Address: " << thermostat.getNetworkConfigurationPtr()->getSubnetMask() << endl;
+			std::cout << "Device Gateway Address: " << thermostat.getNetworkConfigurationPtr()->getGatewayAddress() << endl;
 				
 	}
 
 	void test_tempNewSmartNodeContainerDataCollection() {
 		CentralController testController;
 		testController.startController();
-		print_tempNewSmartNodeContainer(testController);
+		print_tempNewSmartNodeContainer(testController); //comment out after destructor uncommented
+		print_smartNodeInventory(testController); //comment out after destructor uncommented
 	}

@@ -6,7 +6,7 @@
  * \date   May 2022
  *********************************************************************/
 #include "Network.h"
-
+#include <iostream>
 namespace Net {
 	/**
 	 * Default constructor, initialize values with placeholders.
@@ -37,6 +37,8 @@ namespace Net {
 		setIPAddress(ipAddress);
 		setSubnetMask(subnetMask);
 		setGatewayAddress(gatewayAddress);
+		std::cout << "\n full network constructor was called" << std::endl;
+		
 	}
 
 	/**

@@ -1,7 +1,10 @@
 ﻿#include "CentralController.h"
 #include "ValidationLibrary.h"
+#include "Thermostat.h"
 #include <string>
 #include <iostream>
+#include <stdio.h>
+#include <iomanip>
 
 namespace Controller {
 
@@ -11,6 +14,10 @@ namespace Controller {
 	}
 	CentralController::~CentralController()
 	{
+		// enable once in-app inventory display is an option (need keep for print statements for testing)
+		// clean up all the smartNode inventory objects dynamically created on heap
+		// for (auto smartNode : _smartNodeInventory) delete smartNode;
+		std::cout << "\n CentralController Destructor was called" << std::endl;
 	}
 	void CentralController::startController()
 {
@@ -462,10 +469,9 @@ void CentralController::launchGetNetworkConfigDataMenu()
 				launchCreateGatewayAddressMenu();
 				break;
 			case SAVE:
-				std::cout << "Option 6. Save was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				launchSaveNewDeviceMenu();
 				break;
 			case CANCEL:
 				std::cout << "Option 7. Cancel was selected.";
@@ -717,6 +723,76 @@ void CentralController::launchCreateGatewayAddressMenu()
 	}
 }
 
+void CentralController::launchSaveNewDeviceMenu()
+{
+	std::string choice = "";
+
+
+	while (choice != "Q" && choice != "q") {
+		system("cls");  // Clear the Console Screen
+
+		std::cout << "=============================================================" << std::endl;
+		std::cout << "       Central Smart-Home Confirm Save New Device Menu       " << std::endl;
+		std::cout << "-------------------------------------------------------------" << std::endl;
+		std::cout << "  Device Type............. " << _tempNewSmartNodeContainer["device_type"] << std::endl;
+		std::cout << "  Device Name............. " << _tempNewSmartNodeContainer["device_name"] << std::endl;
+		std::cout << "  Device MAC Address...... " << _tempNewSmartNodeContainer["device_mac"] << std::endl;
+		std::cout << "  Device IP Address....... " << _tempNewSmartNodeContainer["ipv4_address"] << std::endl;
+		std::cout << "  Device Gateway Address.. " << _tempNewSmartNodeContainer["subnet_mask"] << std::endl << std::endl;
+		std::cout << "  Verify details and enter confirmation at the prompt >>> \n";
+		std::cout << "=============================================================\n";
+		std::cout << "(Q to Quit Input and Not Save, S to Save New Device) >>> ";    // Input Prompt
+
+		std::getline(std::cin, choice);
+		if (choice.length() < 1 || choice.length() > 1) {
+			choice = "";
+			std::cin.clear();
+			std::cin.ignore(255, '\n');
+		}
+		else if (choice == "Q" || choice == "q" ) {
+			// Do nothign and allow to exist the loop back to the previous menu
+		}
+		else if (choice == "s" || choice == "S") {
+			enum device_type_choice {THERMOSTAT = 1, TELEVISON, VACUUM_BOT, ALARM, LIGHTING_ZONE };
+			int whichDeviceType = 0;
+			if (_tempNewSmartNodeContainer["device_type"] == "Thermostat") whichDeviceType = THERMOSTAT;
+			if (_tempNewSmartNodeContainer["device_type"] == "Televsion") whichDeviceType = TELEVISON;
+			if (_tempNewSmartNodeContainer["device_type"] == "Vacuum Bot") whichDeviceType = VACUUM_BOT;
+			if (_tempNewSmartNodeContainer["device_type"] == "Alarm") whichDeviceType = ALARM;
+			if (_tempNewSmartNodeContainer["device_type"] == "Lighting Zone") whichDeviceType = LIGHTING_ZONE;
+			
+			switch (whichDeviceType) {
+			case THERMOSTAT:
+			{
+				Node::SmartNode* newThermostatDevice = new Node::Thermostat(
+					_tempNewSmartNodeContainer["device_type"],
+					_tempNewSmartNodeContainer["device_name"],
+					_tempNewSmartNodeContainer["device_mac"],
+					_tempNewSmartNodeContainer["ipv4_address"],
+					_tempNewSmartNodeContainer["subnet_mask"],
+					_tempNewSmartNodeContainer["gateway_address"]);
+				_smartNodeInventory.push_back(newThermostatDevice);
+			}
+				choice = "Q";     // Return to previous menu after succesful save
+				break;
+			case TELEVISON:
+				break;
+			case VACUUM_BOT:
+				break;
+			case ALARM:
+				break;
+			case LIGHTING_ZONE:
+				break;
+			default:
+				break;
+			}
+			
+		}
+
+
+	}
+}
+
 void CentralController::resetTempNewSmartNodeContainerStateFlags()
 {
 	_isTempNewSmartNodeContainerDeviceNameSet = false;
@@ -762,6 +838,8 @@ void CentralController::launchInventoryAddDeviceMenu()
 			case THERMOSTAT:
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
+				_tempNewSmartNodeContainer["device_type"] = "Thermostat";
+				_isTempNewSmartNodeContainerDeviceTypeSet = true;
 				launchGetNetworkConfigDataMenu();
 				break;
 			case TELEVISION:
@@ -819,6 +897,35 @@ void print_tempNewSmartNodeContainer(CentralController centralController)
 	std::cout << smartNode;
 	for (auto kvPair : centralController._tempNewSmartNodeContainer) {
 		std::cout << kvPair.first << " : " << kvPair.second << std::endl;
+	}
+	std::cout << "=====================================" << std::endl;
+}
+
+/**
+ * Friend function to help test user data collection storage post device creation.
+ * 
+ * \param centralController
+ */
+void print_smartNodeInventory(CentralController centralController)
+{
+	/*
+	Inventory Container: std::vector<Node::SmartNode*> _smartNodeInventory;
+	*/
+
+	std::string inventory;
+	std::cout << std::endl << std::endl;
+	inventory.append("=====================================\n");
+	inventory.append("            smartNodeInventory       \n");
+	inventory.append("-------------------------------------\n");
+	std::cout << inventory;
+	for (auto smartNode : centralController._smartNodeInventory) {
+		std::cout << "Device Type: " << smartNode->getDeviceType() << std::endl;
+		std::cout << "Device Name: " << smartNode->getNetworkConfigurationPtr()->getDeviceName() << std::endl;
+		std::cout << "Device MAC Address: " << smartNode->getNetworkConfigurationPtr()->getMacAddress() << std::endl;
+		std::cout << "Device IPv4 Address: " << smartNode->getNetworkConfigurationPtr()->getIPAddress() << std::endl;
+		std::cout << "Device Subnet Mask:  " << smartNode->getNetworkConfigurationPtr()->getSubnetMask() << std::endl;
+		std::cout << "Device Gateway Address: " << smartNode->getNetworkConfigurationPtr()->getGatewayAddress() << std::endl;
+		std::cout << std::endl;
 	}
 	std::cout << "=====================================" << std::endl;
 }

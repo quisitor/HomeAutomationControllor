@@ -154,6 +154,7 @@
     <ClInclude Include="src\Network.h" />
     <ClInclude Include="src\CentralController.h" />
     <ClInclude Include="src\ValidationLibrary.h" />
+    <ClInclude Include="src\Thermostat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\SmartNode.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="src\HomeAutomationMain.cpp" />
     <ClCompile Include="src\ValidationLibrary.cpp" />
     <ClCompile Include="src\ValidationLibrary_UnitTests.cpp" />
+    <ClCompile Include="src\Thermostat.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

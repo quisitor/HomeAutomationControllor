@@ -8,7 +8,7 @@
  *********************************************************************/
 #pragma once
 #include<stdlib.h>
-#include"SmartNode.h"
+#include "SmartNode.h"
 #include<map>
 #include<vector>
 
@@ -21,6 +21,7 @@ public:
 	~CentralController();
 	void startController();
 	friend void print_tempNewSmartNodeContainer(CentralController centralController);
+	friend void print_smartNodeInventory(CentralController centralController);
 
 private:
 	// Top-Level Menus
@@ -39,12 +40,14 @@ private:
 	void launchCreateDeviceIPAddressMenu();
 	void launchCreateSubnetMaskMenu();
 	void launchCreateGatewayAddressMenu();
+	void launchSaveNewDeviceMenu();
 
 	// Containers
 	std::vector<Node::SmartNode*> _smartNodeInventory;
 	std::map<std::string, std::string> _tempNewSmartNodeContainer;
 
 	// State Flags
+	bool _isTempNewSmartNodeContainerDeviceTypeSet = false;
 	bool _isTempNewSmartNodeContainerDeviceNameSet = false;
 	bool _isTempNewSmartNodeContainerDeviceMACSet = false;
 	bool _isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;

@@ -16,14 +16,18 @@ namespace Node {
 	class SmartNode
 	{
 	public:
-		SmartNode();
-		SmartNode(std::string deviceName, std::string deviceMac, std::string deviceIPv4, std::string deviceSubnetMask,
+		SmartNode(std::string deviceType, std::string deviceName, std::string deviceMac, std::string deviceIPv4, std::string deviceSubnetMask,
 			std::string deviceGatewayAddress);
 		virtual ~SmartNode();
-		Net::Network* getNetworkConfiguration();
-		
+		Net::Network* getNetworkConfigurationPtr();
+		void setDeviceType(std::string deviceType);
+		std::string getDeviceType();
+		SmartNode* getPtrToSmartNode();
+
 	private:
 		Net::Network* _netConfig;
+		std::string  _deviceType;
+		SmartNode* _smartNode;
 	};
 
 } // End namespace Node
