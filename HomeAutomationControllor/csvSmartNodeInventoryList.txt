@@ -1,0 +1,2 @@
+Thermostat,ThermoMaster1,aa:bb:cc:dd:ee:ff,10.10.10.10,255.255.255.0,10.10.10.1
+Thermostat,ThermoDeluxe,af:dc:ac:ee:ff:af,10.10.10.20,255.255.255.0,10.10.10.1

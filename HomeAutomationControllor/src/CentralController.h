@@ -42,6 +42,12 @@ private:
 	void launchCreateGatewayAddressMenu();
 	void launchSaveNewDeviceMenu();
 
+	// Internal Helper Functions
+	void resetTempNewSmartNodeContainerStateFlags();
+
+	// File I/O
+	void appendSmartNodeToInventoryFile(Node::SmartNode* newSmartNode);
+
 	// Containers
 	std::vector<Node::SmartNode*> _smartNodeInventory;
 	std::map<std::string, std::string> _tempNewSmartNodeContainer;
@@ -54,8 +60,10 @@ private:
 	bool _isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
 	bool _isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
 
-	// Internal Helper Functions
-	void resetTempNewSmartNodeContainerStateFlags();
+
+
+
+
 
 
 

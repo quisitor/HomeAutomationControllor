@@ -5,6 +5,8 @@
 #include <iostream>
 #include <stdio.h>
 #include <iomanip>
+#include <fstream>
+
 
 namespace Controller {
 
@@ -772,6 +774,7 @@ void CentralController::launchSaveNewDeviceMenu()
 					_tempNewSmartNodeContainer["subnet_mask"],
 					_tempNewSmartNodeContainer["gateway_address"]);
 				_smartNodeInventory.push_back(newThermostatDevice);
+				appendSmartNodeToInventoryFile(newThermostatDevice);
 			}
 				choice = "Q";     // Return to previous menu after succesful save
 				break;
@@ -800,6 +803,22 @@ void CentralController::resetTempNewSmartNodeContainerStateFlags()
 	_isTempNewSmartNodeContainerDeviceIPv4AddressSet = false;
 	_isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
 	_isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
+}
+
+void CentralController::appendSmartNodeToInventoryFile(Node::SmartNode* newSmartNode)
+{
+	std::fstream inventoryFile("csvSmartNodeInventoryList.txt", std::ios::app);
+	if (inventoryFile.is_open()) {
+
+		inventoryFile	<< newSmartNode->getDeviceType() << "," 
+						<< newSmartNode->getNetworkConfigurationPtr()->getDeviceName() << "," 
+						<< newSmartNode->getNetworkConfigurationPtr()->getMacAddress() << ","
+						<< newSmartNode->getNetworkConfigurationPtr()->getIPAddress() <<  ","
+			            << newSmartNode->getNetworkConfigurationPtr()->getSubnetMask() << ","
+						<< newSmartNode->getNetworkConfigurationPtr()->getGatewayAddress() << std::endl;
+	}
+	inventoryFile.close();
+
 }
 
 void CentralController::launchInventoryAddDeviceMenu()
