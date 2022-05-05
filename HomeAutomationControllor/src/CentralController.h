@@ -46,7 +46,9 @@ private:
 	void resetTempNewSmartNodeContainerStateFlags();
 
 	// File I/O
+	const std::string NODE_INVENTORY_FILE = "csvSmartNodeInventoryList.txt";
 	void appendSmartNodeToInventoryFile(Node::SmartNode* newSmartNode);
+	void loadSmartNodeListFromInventoryFile();
 
 	// Containers
 	std::vector<Node::SmartNode*> _smartNodeInventory;

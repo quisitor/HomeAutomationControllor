@@ -1,5 +1,6 @@
 ﻿#include "CentralController.h"
 #include "ValidationLibrary.h"
+#include "HomeAutomationControllerTemplateLibrary.h"
 #include "Thermostat.h"
 #include <string>
 #include <iostream>
@@ -22,9 +23,10 @@ namespace Controller {
 		std::cout << "\n CentralController Destructor was called" << std::endl;
 	}
 	void CentralController::startController()
-{
-	launchMainMenu();
-}
+	{
+		loadSmartNodeListFromInventoryFile();
+		launchMainMenu();
+	}
 
 void CentralController::launchMainMenu()
 {
@@ -807,7 +809,7 @@ void CentralController::resetTempNewSmartNodeContainerStateFlags()
 
 void CentralController::appendSmartNodeToInventoryFile(Node::SmartNode* newSmartNode)
 {
-	std::fstream inventoryFile("csvSmartNodeInventoryList.txt", std::ios::app);
+	std::fstream inventoryFile(NODE_INVENTORY_FILE, std::ios::app);
 	if (inventoryFile.is_open()) {
 
 		inventoryFile	<< newSmartNode->getDeviceType() << "," 
@@ -818,6 +820,59 @@ void CentralController::appendSmartNodeToInventoryFile(Node::SmartNode* newSmart
 						<< newSmartNode->getNetworkConfigurationPtr()->getGatewayAddress() << std::endl;
 	}
 	inventoryFile.close();
+
+}
+
+void CentralController::loadSmartNodeListFromInventoryFile()
+{
+	//Loading std::vector<Node::SmartNode*> _smartNodeInventory; from file
+	//csv line format: deviceType,deviceName,deviceMAC,deviceIP,deviceSubnetMask,deviceGatewayAddress\n
+	
+	int whichDeviceType = 0;
+	enum device_type_choice { THERMOSTAT = 1, TELEVISON, VACUUM_BOT, ALARM, LIGHTING_ZONE };
+	std::string deviceType, deviceName, deviceMAC, deviceIP, deviceSubnetMask, deviceGatewayAddress;
+	std::fstream inventoryFile(NODE_INVENTORY_FILE, std::ios::in);
+	if (inventoryFile.is_open()) {
+		while (!inventoryFile.eof()) {
+			std::getline(inventoryFile, deviceType, ',');
+			std::getline(inventoryFile, deviceName, ',');
+			std::getline(inventoryFile, deviceMAC, ',');
+			std::getline(inventoryFile, deviceIP, ',');
+			std::getline(inventoryFile, deviceSubnetMask, ',');
+			std::getline(inventoryFile, deviceGatewayAddress, '\n');
+
+			if (deviceType == "Thermostat") whichDeviceType = THERMOSTAT;
+			else if (deviceType == "Televsion") whichDeviceType = TELEVISON;
+			else if (deviceType == "Vacuum Bot") whichDeviceType = VACUUM_BOT;
+			else if (deviceType == "Alarm") whichDeviceType = ALARM;
+			else if (deviceType == "Lighting Zone") whichDeviceType = LIGHTING_ZONE;
+
+			switch (whichDeviceType) {
+			case THERMOSTAT:
+				createNewSmartNode<Node::Thermostat>(
+					_smartNodeInventory, 
+					deviceType, 
+					deviceName, 
+					deviceMAC, 
+					deviceIP, 
+					deviceSubnetMask, 
+					deviceGatewayAddress);
+				break;
+			case TELEVISON:
+				break;
+			case VACUUM_BOT:
+				break;
+			case ALARM:
+				break;
+			case LIGHTING_ZONE:
+				break;
+			default:
+				break;
+			}
+		}
+		inventoryFile.close();
+	}
+
 
 }
 

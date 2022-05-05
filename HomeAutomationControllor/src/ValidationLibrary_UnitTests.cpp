@@ -9,6 +9,7 @@
 #include "CentralController.h"
 #include "Network.h"
 #include "SmartNode.h"
+#include "HomeAutomationControllerTemplateLibrary.h"
 #include <string>
 #include <iostream>
 
@@ -24,6 +25,7 @@ void testDeviceNameValidation();
 void testMainMenuDisplay();
 void testNetworkObject();
 void test_tempNewSmartNodeContainerDataCollection();
+
 
 
 int main() {
@@ -302,3 +304,5 @@ int main() {
 		print_tempNewSmartNodeContainer(testController); //comment out after destructor uncommented
 		print_smartNodeInventory(testController); //comment out after destructor uncommented
 	}
+
+	

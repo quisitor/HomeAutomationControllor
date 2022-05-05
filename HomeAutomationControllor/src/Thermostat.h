@@ -20,7 +20,7 @@ namespace Node {
 			std::cout << "\nThermostat constructor was called" << std::endl;
 		}
 
-		virtual ~Thermostat() { std::cout << "\Thermost Destructor was Called..." << std::endl; }
+		virtual ~Thermostat() { std::cout << "\nThermost Destructor was Called..." << std::endl; }
 	};
 } // End namespace Thermostat
 

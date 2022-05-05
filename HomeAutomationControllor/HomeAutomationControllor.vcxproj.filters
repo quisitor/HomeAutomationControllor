@@ -30,6 +30,9 @@
     <ClInclude Include="src\Thermostat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\HomeAutomationControllerTemplateLibrary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CentralController.cpp">

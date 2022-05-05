@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\HomeAutomationControllerTemplateLibrary.h" />
     <ClInclude Include="src\SmartNode.h" />
     <ClInclude Include="src\Network.h" />
     <ClInclude Include="src\CentralController.h" />
