@@ -1,3 +1,7 @@
 Thermostat,ThermoMaster1,aa:bb:cc:dd:ee:ff,10.10.10.10,255.255.255.0,10.10.10.1
 Thermostat,ThermoDeluxe,af:dc:ac:ee:ff:af,10.10.10.20,255.255.255.0,10.10.10.1
-Thermostat,ThermoSpecial,ee:ee:ee:ee:ee:ee,10.10.10.30,255.255.255.0,10.10.10.1Thermostat,FourthStat,11:22:33:44:55:66,10.10.10.40,255.255.255.0,10.10.10.1
+Thermostat,ThermoSpecial,ee:ee:ee:ee:ee:ee,10.10.10.30,255.255.255.0,10.10.10.1
+Thermostat,F,11:22:33:44:55:66,10.10.10.40,255.255.255.0,10.10.10.1
+Thermostat,FifthDevice,AF:BF:CF:DF:EF:FF,10.10.10.50,255.255.255.0,10.10.10.1
+Thermostat,SixthThermo,ab:ff:ed:af:ff:ee,10.10.10.60,255.255.255.0,10.10.10.1
+Thermostat,7thThermoStat,77:77:77:ab:cc:dd,10.10.10.70,255.255.255.0,10.10.10.1

@@ -4,9 +4,9 @@
 #include "Thermostat.h"
 #include <string>
 #include <iostream>
-#include <stdio.h>
 #include <iomanip>
 #include <fstream>
+#include <cstdio>
 
 
 namespace Controller {
@@ -150,30 +150,40 @@ void CentralController::launchStatusMenu()
 
 void CentralController::launchInventoryMenu()
 {
-	enum choices { ADD_DEVICE = 1, EDIT_DEVICE, DELETE_DEVICE, REFRESH_INVENTORY_LISTING, BACK_TO_MAIN_MENU };
+	enum choices { ADD_DEVICE = 1, EDIT_DEVICE, DELETE_DEVICE, BACK_TO_MAIN_MENU };
 	int choice = 0;
 	while (choice != BACK_TO_MAIN_MENU) {
 		system("cls");  // Clear the Console Screen
-
-		std::string inventoryMenu;   // Central Controller Inventory Menu String Builder
-		inventoryMenu.append("=============================================================\n");
-		inventoryMenu.append("         Central Smart-Home Controller Inventory Menu        \n");
-		inventoryMenu.append("-------------------------------------------------------------\n");
-		inventoryMenu.append("  1. Add Device                                              \n");
-		inventoryMenu.append("  2. Edit Device                                             \n");
-		inventoryMenu.append("  3. Delete Device                                           \n");
-		inventoryMenu.append("  4. Refresh Inventory Listing                               \n");
-		inventoryMenu.append("  5. Back to Main Menu                                       \n");
-		inventoryMenu.append("=============================================================\n");
-		inventoryMenu.append(">>> ");              // Input Prompt
-		std::cout << inventoryMenu;
-
+		
+		std::cout << "===========================================================================================================\n";
+		std::cout << "                              Central Smart - Home Controller Inventory Menu                               \n";
+		std::cout << "-----------------------------------------------------------------------------------------------------------\n";
+		printf("%-*s%-*s%-*s%-*s%-*s%-*s\n",16,"Type",18,"Name",20,"MAC Address",18,"IP Address",18,"Subnet Mask",18,"Gateway Address");
+		for (auto smartNode : _smartNodeInventory)
+		{
+			//Issue with getting variable std::string to print solved via https://stackoverflow.com/questions/10865957/printf-with-stdstring
+			printf("%-*s%-*s%-*s%-*s%-*s%-*s\n", 
+				16, smartNode->getDeviceType().c_str(),
+				18, smartNode->getNetworkConfigurationPtr()->getDeviceName().c_str(),
+				20, smartNode->getNetworkConfigurationPtr()->getMacAddress().c_str(),
+				18, smartNode->getNetworkConfigurationPtr()->getIPAddress().c_str(),
+				18, smartNode->getNetworkConfigurationPtr()->getSubnetMask().c_str(),
+				18, smartNode->getNetworkConfigurationPtr()->getGatewayAddress().c_str());
+		}
+		std::cout << "-----------------------------------------------------------------------------------------------------------\n";
+		std::cout << "  1. Add Device                                                                                            \n";
+		std::cout << "  2. Edit Device                                                                                           \n";
+		std::cout << "  3. Delete Device                                                                                         \n";
+		std::cout << "  4. Back to Main Menu                                                                                     \n";
+		std::cout << "===========================================================================================================\n";
+		std::cout << ">>> ";                   // Input Prompt
+	
 		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
 			std::cin.clear();
 			std::cin.ignore(255, '\n');
 			choice = 0;
 		}
-		else if (choice < 1 || choice > 5) {   // Clear if CIN is not in range [1,5]
+		else if (choice < 1 || choice > 4) {   // Clear if CIN is not in range [1,4]
 			std::cin.clear();
 			std::cin.ignore(255, '\n');
 		}
@@ -193,12 +203,6 @@ void CentralController::launchInventoryMenu()
 				break;
 			case DELETE_DEVICE:
 				std::cout << "Option 3. Delete Device was selected.";
-				std::cin.clear();
-				std::cin.ignore(255, '\n');
-				std::cin.get();
-				break;
-			case REFRESH_INVENTORY_LISTING:
-				std::cout << "Option 4. Refresh Inventory Listing was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
 				std::cin.get();
@@ -478,10 +482,9 @@ void CentralController::launchGetNetworkConfigDataMenu()
 				launchSaveNewDeviceMenu();
 				break;
 			case CANCEL:
-				std::cout << "Option 7. Cancel was selected.";
 				std::cin.clear();
 				std::cin.ignore(255, '\n');
-				std::cin.get();
+				_tempNewSmartNodeContainer.clear();
 				break;
 			default:
 				std::cout << "Default Option is Not Possible.";
@@ -742,7 +745,8 @@ void CentralController::launchSaveNewDeviceMenu()
 		std::cout << "  Device Name............. " << _tempNewSmartNodeContainer["device_name"] << std::endl;
 		std::cout << "  Device MAC Address...... " << _tempNewSmartNodeContainer["device_mac"] << std::endl;
 		std::cout << "  Device IP Address....... " << _tempNewSmartNodeContainer["ipv4_address"] << std::endl;
-		std::cout << "  Device Gateway Address.. " << _tempNewSmartNodeContainer["subnet_mask"] << std::endl << std::endl;
+		std::cout << "  Device Subnet Address... " << _tempNewSmartNodeContainer["subnet_mask"] << std::endl;
+		std::cout << "  Device Gateway Address.. " << _tempNewSmartNodeContainer["gateway_address"] << std::endl << std::endl;
 		std::cout << "  Verify details and enter confirmation at the prompt >>> \n";
 		std::cout << "=============================================================\n";
 		std::cout << "(Q to Quit Input and Not Save, S to Save New Device) >>> ";    // Input Prompt
@@ -776,6 +780,7 @@ void CentralController::launchSaveNewDeviceMenu()
 					_tempNewSmartNodeContainer["subnet_mask"],
 					_tempNewSmartNodeContainer["gateway_address"]);
 				_smartNodeInventory.push_back(newThermostatDevice);
+				_tempNewSmartNodeContainer.clear();
 				appendSmartNodeToInventoryFile(newThermostatDevice);
 			}
 				choice = "Q";     // Return to previous menu after succesful save
@@ -812,12 +817,12 @@ void CentralController::appendSmartNodeToInventoryFile(Node::SmartNode* newSmart
 	std::fstream inventoryFile(NODE_INVENTORY_FILE, std::ios::app);
 	if (inventoryFile.is_open()) {
 
-		inventoryFile	<< newSmartNode->getDeviceType() << "," 
-						<< newSmartNode->getNetworkConfigurationPtr()->getDeviceName() << "," 
-						<< newSmartNode->getNetworkConfigurationPtr()->getMacAddress() << ","
-						<< newSmartNode->getNetworkConfigurationPtr()->getIPAddress() <<  ","
-			            << newSmartNode->getNetworkConfigurationPtr()->getSubnetMask() << ","
-						<< newSmartNode->getNetworkConfigurationPtr()->getGatewayAddress() << std::endl;
+		inventoryFile << newSmartNode->getDeviceType() << ","
+			<< newSmartNode->getNetworkConfigurationPtr()->getDeviceName() << ","
+			<< newSmartNode->getNetworkConfigurationPtr()->getMacAddress() << ","
+			<< newSmartNode->getNetworkConfigurationPtr()->getIPAddress() << ","
+			<< newSmartNode->getNetworkConfigurationPtr()->getSubnetMask() << ","
+			<< newSmartNode->getNetworkConfigurationPtr()->getGatewayAddress() << std::endl;
 	}
 	inventoryFile.close();
 
@@ -847,6 +852,7 @@ void CentralController::loadSmartNodeListFromInventoryFile()
 			else if (deviceType == "Alarm") whichDeviceType = ALARM;
 			else if (deviceType == "Lighting Zone") whichDeviceType = LIGHTING_ZONE;
 
+			if (!inventoryFile.good()) break;
 			switch (whichDeviceType) {
 			case THERMOSTAT:
 				createNewSmartNode<Node::Thermostat>(
