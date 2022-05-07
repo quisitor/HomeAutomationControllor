@@ -44,7 +44,7 @@ void CentralController::launchMainMenu()
 		scMainMenu.append("  3. Scheduler                                               \n");
 		scMainMenu.append("  4. Controller                                              \n");
 		scMainMenu.append("  5. Power Off                                               \n");
-		scMainMenu.append("=============================================================\n");
+		scMainMenu.append("=============================================================\n"); 
 		scMainMenu.append(">>> ");              // Input Prompt
 		std::cout << scMainMenu;
 
@@ -177,7 +177,7 @@ void CentralController::launchInventoryMenu()
 		std::cout << "  4. Back to Main Menu                                                                                     \n";
 		std::cout << "===========================================================================================================\n";
 		std::cout << ">>> ";                   // Input Prompt
-	
+		
 		if (!(std::cin >> choice)) {           // Clear if CIN is not an Integer
 			std::cin.clear();
 			std::cin.ignore(255, '\n');

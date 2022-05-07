@@ -62,13 +62,6 @@ private:
 	bool _isTempNewSmartNodeContainerDeviceSubnetMaskSet = false;
 	bool _isTempNewSmartNodeContainerDeviceGatewayAddressSet = false;
 
-
-
-
-
-
-
-
 };
 
 } // End namespace Controller
