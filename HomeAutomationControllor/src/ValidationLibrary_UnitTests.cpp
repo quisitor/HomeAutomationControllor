@@ -5,6 +5,8 @@
  * \author Craig Smith
  * \date   May 2022
  *********************************************************************/
+
+
 #include "ValidationLibrary.h"
 #include "CentralController.h"
 #include "Network.h"
@@ -28,28 +30,28 @@ void test_tempNewSmartNodeContainerDataCollection();
 
 
 
-int main() {
-	
-	// Run Tests
-	//testMACAddressValidation();
-	//std::cin.get();
-	//testIPV4AddressValidation();
-	//std::cin.get();
-	//testIPV4SubnetMaskValidation();
-	//std::cin.get();
-	//testDeviceNameValidation();
-	//std::cin.get();
-	//testNetworkObject();
-	//std::cin.get();
-	//testMainMenuDisplay();
-	//std::cin.get();
-	test_tempNewSmartNodeContainerDataCollection();
-	//std::cin.get();
-
-
-	return 0;
-
-}
+//int main() {
+//	
+//	//Run Tests
+//	//testMACAddressValidation();
+//	//std::cin.get();
+//	//testIPV4AddressValidation();
+//	//std::cin.get();
+//	//testIPV4SubnetMaskValidation();
+//	//std::cin.get();
+//	//testDeviceNameValidation();
+//	//std::cin.get();
+//	//testNetworkObject();
+//	//std::cin.get();
+//	//testMainMenuDisplay();
+//	//std::cin.get();
+//	test_tempNewSmartNodeContainerDataCollection();
+//
+//
+//
+//	return 0;
+//
+//}
 	void testMACAddressValidation()
 	{
 		/* Test the MAC Address Input Validator*/
@@ -301,8 +303,8 @@ int main() {
 	void test_tempNewSmartNodeContainerDataCollection() {
 		CentralController testController;
 		testController.startController();
-		print_tempNewSmartNodeContainer(testController); //comment out after destructor uncommented
-		print_smartNodeInventory(testController); //comment out after destructor uncommented
+		//print_tempNewSmartNodeContainer(testController); //comment out after destructor uncommented
+		//print_smartNodeInventory(testController); //comment out after destructor uncommented
 	}
 
 	

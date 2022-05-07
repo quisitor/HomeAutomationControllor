@@ -19,8 +19,8 @@ namespace Controller {
 	{
 		// enable once in-app inventory display is an option (need keep for print statements for testing)
 		// clean up all the smartNode inventory objects dynamically created on heap
-		// for (auto smartNode : _smartNodeInventory) delete smartNode;
-		std::cout << "\n CentralController Destructor was called" << std::endl;
+		for (auto smartNode : _smartNodeInventory) delete smartNode;
+		// std::cout << "\n CentralController Destructor was called" << std::endl;
 	}
 	void CentralController::startController()
 	{

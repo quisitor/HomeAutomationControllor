@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   SmartNode.h
- * \brief  Declares an Abstract Class to be used to create SmartNodes 
+ * \brief  Declares a Class to be used to derive unique SmartNodes 
  * of differrent types.
  * 
  * \author Craig Smith

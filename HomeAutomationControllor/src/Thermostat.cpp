@@ -9,6 +9,7 @@
 
 namespace Node {
 
-
+	// Add customizatiosn for the Thermostat Class
+	// ToDo override virtual functions
 
 }

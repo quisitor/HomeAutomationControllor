@@ -16,12 +16,12 @@ namespace Node {
 		_deviceType = deviceType;
 		_smartNode = this;
 		_isNodeEnabled = false;
-		std::cout << "\n smartnode constructor was called" << std::endl;
+		//std::cout << "\n smartnode constructor was called" << std::endl;
 	}
 
 	SmartNode::~SmartNode()
 	{
-		std::cout << "\n SmartNode Destructor was called" << std::endl;
+		//std::cout << "\n SmartNode Destructor was called" << std::endl;
 		delete _netConfig;
 	}
 

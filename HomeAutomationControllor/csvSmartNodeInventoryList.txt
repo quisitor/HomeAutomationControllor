@@ -6,3 +6,4 @@ Thermostat,FifthDevice,AF:BF:CF:DF:EF:FF,10.10.10.50,255.255.255.0,10.10.10.1
 Thermostat,SixthThermo,ab:ff:ed:af:ff:ee,10.10.10.60,255.255.255.0,10.10.10.1
 Thermostat,7thThermoStat,77:77:77:ab:cc:dd,10.10.10.70,255.255.255.0,10.10.10.1
 Thermostat,Thermo8Th,ab:ab:dd:ef:ab:ac,10.10.10.80,255.255.255.0,10.10.10.1
+Thermostat,SmurfoStat,AA:FF:DD:CC:BB:EE,10.10.10.90,255.255.255.0,10.10.10.1

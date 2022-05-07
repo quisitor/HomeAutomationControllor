@@ -158,10 +158,10 @@
     <ClInclude Include="src\Thermostat.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\SmartNode.cpp" />
     <ClCompile Include="src\Network.cpp" />
     <ClCompile Include="src\CentralController.cpp" />
-    <ClCompile Include="src\HomeAutomationMain.cpp" />
     <ClCompile Include="src\ValidationLibrary.cpp" />
     <ClCompile Include="src\ValidationLibrary_UnitTests.cpp" />
     <ClCompile Include="src\Thermostat.cpp" />

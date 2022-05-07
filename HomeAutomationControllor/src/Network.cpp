@@ -37,7 +37,7 @@ namespace Net {
 		setIPAddress(ipAddress);
 		setSubnetMask(subnetMask);
 		setGatewayAddress(gatewayAddress);
-		std::cout << "\n full network constructor was called" << std::endl;
+		//std::cout << "\n full network constructor was called" << std::endl;
 		
 	}
 
